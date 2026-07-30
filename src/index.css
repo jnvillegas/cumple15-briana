@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-stone-800 font-sans;
+}
+
+.reveal-overlay {
+  transition: opacity 1.2s ease, backdrop-filter 1.2s ease;
+}
+
+.reveal-content {
+  transition: filter 1.2s ease, opacity 1.2s ease;
+}
+
+.no-scroll {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.modal-open {
+  overflow: hidden;
+}
