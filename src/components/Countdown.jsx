@@ -24,7 +24,7 @@ function calculateTimeLeft(target) {
   }
 }
 
-const target = '2026-09-28T21:00:00'
+const target = '2026-09-05T22:30:00'
 
 const units = [
   { key: 'days', label: 'Días' },

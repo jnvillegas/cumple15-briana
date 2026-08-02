@@ -57,7 +57,7 @@ export default function RSVP() {
       <div className="max-w-lg mx-auto">
         <i className="fas fa-envelope text-gold-400 text-2xl block text-center mb-4" />
         <h3 className="font-display text-3xl text-lavender-700 italic text-center mb-2">CONFIRMÁ TU ASISTENCIA</h3>
-        <p className="text-center text-stone-500 text-sm mb-8">Por favor, confirmar antes del 28 de agosto de 2026</p>
+        <p className="text-center text-stone-500 text-sm mb-8">Por favor, confirmar antes del 22 de agosto de 2026</p>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
