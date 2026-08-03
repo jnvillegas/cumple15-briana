@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import Hero from './components/Hero'
 import Countdown from './components/Countdown'
 import Quote from './components/Quote'
+import VerticalGallery from './components/VerticalGallery'
 import Details from './components/Details'
 import DressCode from './components/DressCode'
 import Gallery from './components/Gallery'
@@ -20,6 +21,7 @@ export default function App() {
             <Hero />
             <Countdown />
             <Quote />
+            <VerticalGallery />
             <Details />
             <DressCode />
             <Gallery />

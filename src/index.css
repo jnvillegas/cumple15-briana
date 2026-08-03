@@ -27,3 +27,26 @@ body {
 .modal-open {
   overflow: hidden;
 }
+
+/* Encuadre de la cabecera: móvil centrado / desktop (28% deja la cara arriba). */
+.hero-img {
+  object-position: center 45%;
+}
+@media (min-width: 768px) {
+  .hero-img {
+    object-position: center 28%;
+  }
+}
+
+/* Franja inferior con blur difuminado detrás del texto */
+.hero-blur {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 55%;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 65%);
+  mask-image: linear-gradient(to bottom, transparent, black 65%);
+}

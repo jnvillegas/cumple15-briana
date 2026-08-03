@@ -5,17 +5,17 @@ const questions = [
   {
     question: '¿Cuál es mi color favorito?',
     options: ['Rosa', 'Lila', 'Negro'],
-    answer: 1,
+    answer: 0,
   },
   {
     question: '¿Cuál es mi comida favorita?',
     options: ['Hamburguesas', 'Pizza', 'Milanesas'],
-    answer: 0,
+    answer: 1,
   },
   {
     question: '¿Qué me gusta hacer en mi tiempo libre?',
     options: ['Dormir', 'Salir con amigas', 'Ver series'],
-    answer: 1,
+    answer: 2,
   },
   {
     question: '¿Cuál es mi bebida favorita?',
