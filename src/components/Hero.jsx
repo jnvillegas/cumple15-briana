@@ -32,7 +32,7 @@ export default function Hero() {
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
       <img
-        src="/invitacion%20herader.jpeg"
+        src="/imagenes%20optimizadas/invitacion%20herader.jpeg"
         alt=""
         className={`hero-img absolute inset-0 w-full h-full object-cover transition-all duration-[1.2s] ${revealed ? 'scale-100 blur-0' : 'scale-110 blur-md'}`}
       />

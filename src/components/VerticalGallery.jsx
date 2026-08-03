@@ -19,13 +19,13 @@ export default function VerticalGallery() {
   return (
     <section className="py-12 px-4 bg-white">
       {/* VERSIÓN WEB: tres imágenes en fila */}
-      <div className="hidden md:grid grid-cols-3 gap-6 max-w-3xl mx-auto">
+      <div className="hidden md:grid grid-cols-3 gap-6 max-w-4xl mx-auto">
         {photos.map((src, i) => (
           <img
             key={i}
             src={src}
             alt={`Foto ${i + 1}`}
-            className="w-full h-[380px] object-cover rounded-2xl shadow-lg shadow-black/10"
+            className="w-full aspect-[2/3] object-cover rounded-2xl shadow-lg shadow-black/10"
           />
         ))}
       </div>
