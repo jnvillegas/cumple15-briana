@@ -4,10 +4,11 @@ const pricing = {
   adults: 25000,
   children: 15000,
   bank: {
-    bank: 'Banco Nación',
-    cbu: '0000003100000000000001',
-    alias: 'CATA.15.OK',
-    holder: 'Briana',
+    bank: 'Brubank',
+    cbu: '1430001713046563210010',
+    alias: '15DEBRIANA',
+    holder: 'Carlos Alberto Valentín Tejerina',
+    cuil: '20446388143',
   },
 }
 
@@ -44,7 +45,7 @@ function AccountModal({ onClose }) {
         </div>
         <div>
           <p className="text-stone-400 text-xs uppercase tracking-widest mb-1">CBU</p>
-          <p className="text-stone-700 font-mono text-sm">{pricing.bank.cbu}</p>
+          <p className="text-stone-700 font-mono text-sm break-all">{pricing.bank.cbu}</p>
         </div>
         <div>
           <p className="text-stone-400 text-xs uppercase tracking-widest mb-1">Alias</p>
@@ -53,6 +54,10 @@ function AccountModal({ onClose }) {
         <div>
           <p className="text-stone-400 text-xs uppercase tracking-widest mb-1">Titular</p>
           <p className="text-stone-700">{pricing.bank.holder}</p>
+        </div>
+        <div>
+          <p className="text-stone-400 text-xs uppercase tracking-widest mb-1">CUIT/CUIL</p>
+          <p className="text-stone-700 font-mono text-sm">{pricing.bank.cuil}</p>
         </div>
       </div>
     </Modal>
@@ -79,6 +84,8 @@ function PricingModal({ onClose }) {
             <p><span className="text-stone-400">Banco:</span> {pricing.bank.bank}</p>
             <p><span className="text-stone-400">Alias:</span> <span className="text-lavender-600 font-semibold">{pricing.bank.alias}</span></p>
             <p><span className="text-stone-400">CBU:</span> <span className="font-mono text-xs">{pricing.bank.cbu}</span></p>
+            <p><span className="text-stone-400">Titular:</span> {pricing.bank.holder}</p>
+            <p><span className="text-stone-400">CUIT/CUIL:</span> <span className="font-mono text-xs">{pricing.bank.cuil}</span></p>
           </div>
         </div>
       </div>
