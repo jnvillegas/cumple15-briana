@@ -1,22 +1,41 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 
-function GuestCard({ guest, index }) {
+function GuestCard({ guest, index, phone, adults, minors }) {
+  const isConfirmed = guest.confirmed !== false
   return (
     <div className="bg-white rounded-2xl p-5 shadow-sm border border-lavender-100">
       <div className="flex items-center justify-between mb-3">
         <p className="font-medium text-stone-800">
           {guest.name} {guest.last_name}
         </p>
-        <span className={`text-xs px-3 py-1 rounded-full font-medium ${guest.confirmed ? 'bg-lavender-100 text-lavender-700' : 'bg-rose-100 text-rose-600'}`}>
-          {guest.confirmed ? 'Confirmó' : 'No asiste'}
+        <span className={`text-xs px-3 py-1 rounded-full font-medium ${isConfirmed ? 'bg-lavender-100 text-lavender-700' : 'bg-rose-100 text-rose-600'}`}>
+          {isConfirmed ? 'Confirmó' : 'No asiste'}
         </span>
       </div>
-      <div className="flex gap-4 text-sm text-stone-400">
-        {guest.dietary && guest.dietary !== 'Ninguno' && (
-          <span>Dieta: {guest.dietary}</span>
+      <div className="flex flex-wrap gap-x-5 gap-y-1 text-sm text-stone-400">
+        {phone && (
+          <span className="flex items-center gap-1.5">
+            <i className="fas fa-phone text-xs" />
+            {phone}
+          </span>
         )}
-        <span>Invitado #{index + 1}</span>
+        {(adults > 0 || minors > 0) && (
+          <span className="flex items-center gap-1.5">
+            <i className="fas fa-users text-xs" />
+            {adults} adulto(s), {minors} menor(es)
+          </span>
+        )}
+        {guest.dietary && guest.dietary !== 'Ninguno' && (
+          <span className="flex items-center gap-1.5">
+            <i className="fas fa-utensils text-xs" />
+            {guest.dietary}
+          </span>
+        )}
+        <span className="flex items-center gap-1.5">
+          <i className="fas fa-hashtag text-xs" />
+          Invitado #{index + 1}
+        </span>
       </div>
     </div>
   )
@@ -91,8 +110,11 @@ export default function Admin() {
     )
   }
 
-  const totalGuests = rsvps.reduce((sum, r) => sum + r.guests.filter(g => g.confirmed).length, 0)
-  const totalDeclined = rsvps.reduce((sum, r) => sum + r.guests.filter(g => !g.confirmed).length, 0)
+  const confirmedGroups = rsvps.filter(r => r.guests?.some(g => g.confirmed !== false))
+  const totalGuests = rsvps.reduce((sum, r) => sum + r.guests.filter(g => g.confirmed !== false).length, 0)
+  const totalDeclined = rsvps.reduce((sum, r) => sum + r.guests.filter(g => g.confirmed === false).length, 0)
+  const totalAdults = rsvps.reduce((sum, r) => sum + (r.adults || 0), 0)
+  const totalMinors = rsvps.reduce((sum, r) => sum + (r.minors || 0), 0)
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-lavender-50 to-lavender-100 py-10 px-4">
@@ -111,16 +133,16 @@ export default function Admin() {
 
         <div className="grid grid-cols-3 gap-4 mb-8">
           <div className="bg-white rounded-2xl p-4 text-center shadow-sm border border-lavender-100">
-            <p className="font-display text-3xl text-lavender-700">{totalGuests}</p>
-            <p className="text-xs text-stone-400 uppercase tracking-widest mt-1">Confirmaron</p>
+            <p className="font-display text-3xl text-lavender-700">{totalAdults}</p>
+            <p className="text-xs text-stone-400 uppercase tracking-widest mt-1">Adultos</p>
           </div>
           <div className="bg-white rounded-2xl p-4 text-center shadow-sm border border-lavender-100">
-            <p className="font-display text-3xl text-rose-500">{totalDeclined}</p>
-            <p className="text-xs text-stone-400 uppercase tracking-widest mt-1">No asisten</p>
+            <p className="font-display text-3xl text-lavender-500">{totalMinors}</p>
+            <p className="text-xs text-stone-400 uppercase tracking-widest mt-1">Menores</p>
           </div>
           <div className="bg-white rounded-2xl p-4 text-center shadow-sm border border-lavender-100">
-            <p className="font-display text-3xl text-gold-500">{rsvps.length}</p>
-            <p className="text-xs text-stone-400 uppercase tracking-widest mt-1">Grupos</p>
+            <p className="font-display text-3xl text-gold-500">{confirmedGroups.length}</p>
+            <p className="text-xs text-stone-400 uppercase tracking-widest mt-1">Grupos que confirmaron</p>
           </div>
         </div>
 
@@ -129,10 +151,10 @@ export default function Admin() {
             <div key={r.id} className="space-y-3">
               <div className="flex items-center justify-between">
                 <p className="text-xs text-stone-400">{new Date(r.created_at).toLocaleDateString('es-AR')}</p>
-                {r.song && <p className="text-xs text-stone-400">🎵 {r.song}</p>}
+                {r.song && <p className="text-xs text-stone-400">💬 {r.song}</p>}
               </div>
               {r.guests.map((g, i) => (
-                <GuestCard key={i} guest={g} index={i} />
+                <GuestCard key={i} guest={g} index={i} phone={r.phone} adults={r.adults} minors={r.minors} />
               ))}
             </div>
           ))}

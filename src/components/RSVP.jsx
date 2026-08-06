@@ -6,7 +6,10 @@ const dietaryOptions = ['Ninguna', 'Celíaco', 'Vegetariano', 'Vegano']
 export default function RSVP() {
   const [form, setForm] = useState({
     name: '',
+    phone: '',
     asistira: true,
+    adults: 1,
+    minors: 0,
     dietary: 'Ninguna',
     message: '',
   })
@@ -17,7 +20,10 @@ export default function RSVP() {
       `*Confirmación de Asistencia - 15 Briana*`,
       ``,
       `Nombre: ${form.name}`,
+      `Teléfono: ${form.phone}`,
       `Asistirá: ${form.asistira ? 'Sí, asistiré ✅' : 'No podré asistir ❌'}`,
+      `Adultos: ${form.adults}`,
+      `Menores: ${form.minors}`,
       `Preferencia alimenticia: ${form.dietary}`,
     ]
     if (form.message) lines.push(`Mensaje: ${form.message}`)
@@ -31,6 +37,9 @@ export default function RSVP() {
     try {
       const { error } = await supabase.from('rsvps').insert([{
         guests: [{ name: form.name, confirmed: form.asistira, dietary: form.dietary }],
+        phone: form.phone,
+        adults: form.adults,
+        minors: form.minors,
         song: form.message,
       }])
       if (error) throw error
@@ -73,6 +82,18 @@ export default function RSVP() {
           </div>
 
           <div>
+            <label className="block text-stone-500 text-sm mb-1.5">Teléfono de contacto</label>
+            <input
+              type="tel"
+              placeholder="Ej: 11 2345 6789"
+              required
+              value={form.phone}
+              onChange={e => setForm({ ...form, phone: e.target.value })}
+              className="w-full px-4 py-3 rounded-xl border border-lavender-200 bg-white focus:outline-none focus:ring-2 focus:ring-lavender-300 focus:border-transparent transition-shadow"
+            />
+          </div>
+
+          <div>
             <label className="block text-stone-500 text-sm mb-1.5">¿Asistirá?</label>
             <div className="flex gap-4">
               <label className="flex-1 flex items-center justify-center gap-2 p-3 rounded-xl border-2 cursor-pointer transition-all
@@ -97,6 +118,31 @@ export default function RSVP() {
                 />
                 <span className="text-sm text-stone-700">No podré asistir</span>
               </label>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-stone-500 text-sm mb-1.5">Adultos</label>
+              <input
+                type="number"
+                min="0"
+                required
+                value={form.adults}
+                onChange={e => setForm({ ...form, adults: Math.max(0, Number(e.target.value)) })}
+                className="w-full px-4 py-3 rounded-xl border border-lavender-200 bg-white focus:outline-none focus:ring-2 focus:ring-lavender-300 focus:border-transparent transition-shadow"
+              />
+            </div>
+            <div>
+              <label className="block text-stone-500 text-sm mb-1.5">Menores (hasta 12 años)</label>
+              <input
+                type="number"
+                min="0"
+                required
+                value={form.minors}
+                onChange={e => setForm({ ...form, minors: Math.max(0, Number(e.target.value)) })}
+                className="w-full px-4 py-3 rounded-xl border border-lavender-200 bg-white focus:outline-none focus:ring-2 focus:ring-lavender-300 focus:border-transparent transition-shadow"
+              />
             </div>
           </div>
 
