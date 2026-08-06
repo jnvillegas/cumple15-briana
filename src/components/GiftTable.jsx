@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react'
 
 const pricing = {
-  adults: 25000,
-  children: 15000,
   bank: {
     bank: 'Brubank',
     cbu: '1430001713046563210010',
@@ -10,10 +8,6 @@ const pricing = {
     holder: 'Carlos Alberto Valentín Tejerina',
     cuil: '20446388143',
   },
-}
-
-function formatPrice(n) {
-  return '$' + n.toLocaleString('es-AR')
 }
 
 function Modal({ title, children, onClose }) {
@@ -64,38 +58,8 @@ function AccountModal({ onClose }) {
   )
 }
 
-function PricingModal({ onClose }) {
-  return (
-    <Modal title="Valor de Tarjeta" onClose={onClose}>
-      <div className="space-y-6">
-        <div className="bg-lavender-50 rounded-xl p-4 space-y-3">
-          <div className="flex justify-between items-center">
-            <span className="text-stone-600">Adultos</span>
-            <span className="text-xl font-bold text-lavender-700">{formatPrice(pricing.adults)}</span>
-          </div>
-          <div className="border-t border-lavender-200 pt-3 flex justify-between items-center">
-            <span className="text-stone-600">Menores (hasta 12 años)</span>
-            <span className="text-xl font-bold text-lavender-700">{formatPrice(pricing.children)}</span>
-          </div>
-        </div>
-        <div className="border-t border-lavender-100 pt-4 space-y-3">
-          <p className="text-sm text-stone-500 font-medium">Datos para el pago</p>
-          <div className="text-sm text-stone-600 space-y-1">
-            <p><span className="text-stone-400">Banco:</span> {pricing.bank.bank}</p>
-            <p><span className="text-stone-400">Alias:</span> <span className="text-lavender-600 font-semibold">{pricing.bank.alias}</span></p>
-            <p><span className="text-stone-400">CBU:</span> <span className="font-mono text-xs">{pricing.bank.cbu}</span></p>
-            <p><span className="text-stone-400">Titular:</span> {pricing.bank.holder}</p>
-            <p><span className="text-stone-400">CUIT/CUIL:</span> <span className="font-mono text-xs">{pricing.bank.cuil}</span></p>
-          </div>
-        </div>
-      </div>
-    </Modal>
-  )
-}
-
 export default function GiftTable() {
   const [showAccount, setShowAccount] = useState(false)
-  const [showPricing, setShowPricing] = useState(false)
 
   return (
     <section className="py-16 px-4 bg-lavender-50 text-center">
@@ -112,17 +76,9 @@ export default function GiftTable() {
           <i className="fas fa-credit-card mr-2" />
           VER DATOS DE CUENTA
         </button>
-        <button
-          onClick={() => setShowPricing(true)}
-          className="px-8 py-3 border-2 border-gold-400 text-gold-500 rounded-full uppercase tracking-widest text-sm font-semibold hover:bg-gold-400 hover:text-white transition-colors"
-        >
-          <i className="fas fa-tag mr-2" />
-          VER VALOR DE TARJETA
-        </button>
       </div>
 
       {showAccount && <AccountModal onClose={() => setShowAccount(false)} />}
-      {showPricing && <PricingModal onClose={() => setShowPricing(false)} />}
     </section>
   )
 }

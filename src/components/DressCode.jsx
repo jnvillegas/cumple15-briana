@@ -8,7 +8,7 @@ export default function DressCode() {
         <div className="mt-6 bg-white rounded-xl p-4 border border-lavender-200">
           <i className="fas fa-exclamation-circle text-gold-400 mr-2" />
           <span className="text-lavender-600 text-sm font-medium">
-            El dorado y el verde esmeralda se reservan exclusivamente para la quinceañera
+            El dorado y el verde oscuro se reservan exclusivamente para la quinceañera
           </span>
         </div>
       </div>
