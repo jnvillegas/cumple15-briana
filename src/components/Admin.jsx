@@ -292,7 +292,7 @@ export default function Admin() {
           <GuestsPanel />
         ) : (
           <>
-        <div className="grid grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
           <div className="bg-white rounded-2xl p-4 text-center shadow-sm border border-lavender-100">
             <p className="font-display text-3xl text-lavender-700">{totalAdults}</p>
             <p className="text-xs text-stone-400 uppercase tracking-widest mt-1">Adultos</p>

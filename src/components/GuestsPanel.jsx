@@ -139,7 +139,7 @@ export default function GuestsPanel() {
 
   return (
     <>
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         <div className="bg-white rounded-2xl p-4 text-center shadow-sm border border-lavender-100">
           <p className="font-display text-3xl text-lavender-700">{guests.length}</p>
           <p className="text-xs text-stone-400 uppercase tracking-widest mt-1">Grupos</p>
@@ -256,7 +256,7 @@ export default function GuestsPanel() {
                 </div>
               ) : (
                 <>
-                  <div className="flex items-start justify-between gap-3">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                     <div className="min-w-0">
                       <p className="font-medium text-stone-800 truncate">{g.name}</p>
                       <p className="text-xs text-stone-400 mt-1">
@@ -268,7 +268,7 @@ export default function GuestsPanel() {
                     <select
                       value={g.status}
                       onChange={e => handleStatusChange(g.id, e.target.value)}
-                      className={`text-xs px-2 py-1 rounded-full font-medium cursor-pointer border-none focus:outline-none shrink-0 ${cfg.cls}`}
+                      className={`text-xs px-2 py-1 rounded-full font-medium cursor-pointer border-none focus:outline-none w-full sm:w-auto shrink-0 ${cfg.cls}`}
                     >
                       <option value="pendiente">Pendiente</option>
                       <option value="confirmado">Confirmó</option>
@@ -276,10 +276,10 @@ export default function GuestsPanel() {
                     </select>
                   </div>
 
-                  <div className="flex flex-wrap gap-2 mt-4">
+                  <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 mt-4">
                     <button
                       onClick={() => handleCopyLink(g)}
-                      className="flex-1 min-w-[130px] py-2 px-3 bg-lavender-600 text-white rounded-full text-xs font-semibold hover:bg-lavender-700 transition-colors"
+                      className="w-full sm:flex-1 sm:min-w-[130px] py-2 px-3 bg-lavender-600 text-white rounded-full text-xs font-semibold hover:bg-lavender-700 transition-colors"
                     >
                       {copied === g.id ? (
                         <><i className="fas fa-check mr-1.5" />¡Copiado!</>
@@ -289,24 +289,26 @@ export default function GuestsPanel() {
                     </button>
                     <button
                       onClick={() => handleWhatsApp(g)}
-                      className="flex-1 min-w-[130px] py-2 px-3 bg-emerald-600 text-white rounded-full text-xs font-semibold hover:bg-emerald-700 transition-colors"
+                      className="w-full sm:flex-1 sm:min-w-[130px] py-2 px-3 bg-emerald-600 text-white rounded-full text-xs font-semibold hover:bg-emerald-700 transition-colors"
                     >
                       <i className="fab fa-whatsapp mr-1.5" />WhatsApp
                     </button>
-                    <button
-                      onClick={() => startEdit(g)}
-                      className="px-3 py-2 border border-lavender-200 text-lavender-700 rounded-full text-xs hover:bg-lavender-50 transition-colors"
-                      title="Editar"
-                    >
-                      <i className="fas fa-edit" />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(g.id)}
-                      className="px-3 py-2 border border-rose-200 text-rose-500 rounded-full text-xs hover:bg-rose-50 transition-colors"
-                      title="Eliminar"
-                    >
-                      <i className="fas fa-trash-alt" />
-                    </button>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => startEdit(g)}
+                        className="flex-1 sm:flex-none px-3 py-2 border border-lavender-200 text-lavender-700 rounded-full text-xs hover:bg-lavender-50 transition-colors"
+                        title="Editar"
+                      >
+                        <i className="fas fa-edit" />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(g.id)}
+                        className="flex-1 sm:flex-none px-3 py-2 border border-rose-200 text-rose-500 rounded-full text-xs hover:bg-rose-50 transition-colors"
+                        title="Eliminar"
+                      >
+                        <i className="fas fa-trash-alt" />
+                      </button>
+                    </div>
                   </div>
                 </>
               )}
