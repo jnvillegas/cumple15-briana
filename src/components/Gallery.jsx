@@ -25,7 +25,7 @@ export default function Gallery() {
       <i className="fas fa-camera text-gold-400 text-2xl mb-4 block" />
       <h3 className="font-display text-3xl text-lavender-700 italic mb-3">QUIERO VER TUS FOTOS</h3>
       <p className="text-stone-500 max-w-md mx-auto mb-8 text-sm">
-        Pueden subir todas sus fotos del evento a mi álbum compartido.
+        Escaneá el código QR o tocá el botón y subí todas tus fotos y videos del evento al álbum compartido.
       </p>
 
       {/* VERSIÓN WEB: carrusel 3 columnas visibles, avanza de a 1 */}
@@ -73,15 +73,30 @@ export default function Gallery() {
         </div>
         </div>
 
-      <a
-        href="https://latarjetadigital.com.ar/album/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-block px-8 py-3 bg-lavender-600 text-white rounded-full uppercase tracking-widest text-sm font-semibold hover:bg-lavender-700 transition-colors"
-      >
-        <i className="fas fa-images mr-2" />
-        IR AL ÁLBUM
-      </a>
+      <div className="max-w-lg mx-auto mb-8">
+        <div className="bg-white rounded-3xl shadow-lg shadow-black/10 p-6 border border-lavender-100 flex flex-col sm:flex-row items-center gap-6">
+          <img
+            src="/qr.jpg"
+            alt="Código QR para subir fotos al álbum"
+            className="w-44 h-44 object-contain shrink-0"
+          />
+          <div className="text-center sm:text-left flex-1">
+            <p className="font-display text-2xl text-lavender-700 italic">¿Tenés fotos del evento?</p>
+            <p className="text-stone-500 text-sm mt-1 mb-4">
+              Escaneá el código con la cámara de tu celular o tocá el botón para subir tus fotos y videos al álbum.
+            </p>
+            <a
+              href="https://photos.app.goo.gl/x8RwuNuuHaJczhx79"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center px-6 py-3 bg-lavender-600 text-white rounded-full uppercase tracking-widest text-sm font-semibold hover:bg-lavender-700 transition-colors"
+            >
+              <i className="fas fa-images mr-2" />
+              AGREGAR TUS FOTOS
+            </a>
+          </div>
+        </div>
+      </div>
     </section>
   )
 }
