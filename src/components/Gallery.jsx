@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 const photos = [
   '/imagenes%20optimizadas/imagenes%20hotizontales/bri2.jpeg',
@@ -12,6 +12,8 @@ const webSlides = photos.length - 2
 
 export default function Gallery() {
   const [desktopIndex, setDesktopIndex] = useState(0)
+  const [activeMobile, setActiveMobile] = useState(0)
+  const mobileRef = useRef(null)
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -19,6 +21,20 @@ export default function Gallery() {
     }, 3500)
     return () => clearInterval(timer)
   }, [])
+
+  function handleMobileScroll(e) {
+    const el = e.currentTarget
+    const step = el.clientWidth * 0.7 + 4
+    const idx = Math.round(el.scrollLeft / step)
+    setActiveMobile(Math.min(idx, photos.length - 1))
+  }
+
+  function goToMobile(i) {
+    const el = mobileRef.current
+    if (!el) return
+    const step = el.clientWidth * 0.7 + 4
+    el.scrollTo({ left: i * step, behavior: 'smooth' })
+  }
 
   return (
     <section className="py-16 px-4 bg-white text-center">
@@ -54,9 +70,13 @@ export default function Gallery() {
         </div>
       </div>
 
-      {/* VERSIÓN MÓVIL: galería horizontal con scroll */}
+      {/* VERSIÓN MÓVIL: galería horizontal con scroll + deslizador */}
       <div className="md:hidden mb-10 space-y-4">
-        <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2">
+        <div
+          ref={mobileRef}
+          onScroll={handleMobileScroll}
+          className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2"
+        >
           {photos.map((src, i) => (
             <div
               key={i}
@@ -69,6 +89,18 @@ export default function Gallery() {
                 className="w-full h-auto object-cover aspect-[3/2]"
               />
             </div>
+          ))}
+        </div>
+        <div className="flex justify-center gap-2">
+          {photos.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goToMobile(i)}
+              aria-label={`Ir a la foto ${i + 1}`}
+              className={`h-2.5 rounded-full transition-all duration-300 ${
+                i === activeMobile ? 'w-6 bg-lavender-500' : 'w-2.5 bg-lavender-200'
+              }`}
+            />
           ))}
         </div>
       </div>
