@@ -1,9 +1,16 @@
 import { useState, useEffect, useRef } from 'react'
+import { getGuestByToken } from '../lib/guests'
 
 export default function Hero() {
   const [revealed, setRevealed] = useState(false)
   const [playing, setPlaying] = useState(false)
+  const [guest, setGuest] = useState(null)
   const audioRef = useRef(null)
+
+  useEffect(() => {
+    const token = new URLSearchParams(window.location.search).get('invitado')
+    if (token) getGuestByToken(token).then(setGuest)
+  }, [])
 
   useEffect(() => {
     audioRef.current = new Audio('/music.mp3')
@@ -53,6 +60,11 @@ export default function Hero() {
       </div>
 
       <div className={`absolute inset-0 flex flex-col items-center justify-center md:justify-end md:pb-16 z-20 reveal-overlay ${revealed ? 'pointer-events-none opacity-0' : 'opacity-100'}`}>
+        {guest && (
+          <p className="text-white text-2xl md:text-3xl mb-2 font-display italic">
+            Hola, {guest.name}
+          </p>
+        )}
         <p className="text-gold-300 uppercase tracking-[0.3em] text-sm mb-2 font-sans">
           Invitación a mis 15 años
         </p>

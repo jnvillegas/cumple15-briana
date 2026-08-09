@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { jsPDF } from 'jspdf'
 import autoTable from 'jspdf-autotable'
 import { supabase } from '../lib/supabase'
+import GuestsPanel from './GuestsPanel'
 
 function GuestCard({ guest, index, phone, adults, minors }) {
   const isConfirmed = guest.confirmed !== false
@@ -67,6 +68,7 @@ export default function Admin() {
   const [loading, setLoading] = useState(true)
   const [password, setPassword] = useState('')
   const [authed, setAuthed] = useState(false)
+  const [tab, setTab] = useState('guests')
 
   async function loadRsvps() {
     setLoading(true)
@@ -244,7 +246,9 @@ export default function Admin() {
         <div className="max-w-3xl mx-auto px-4 py-6 flex items-center justify-between">
           <div>
             <h1 className="font-display text-4xl text-lavender-700 italic">Invitados</h1>
-            <p className="text-stone-400 text-sm mt-1">Confirmaciones del 15 de Briana</p>
+            <p className="text-stone-400 text-sm mt-1">
+              {tab === 'guests' ? 'Lista de invitados del 15 de Briana' : 'Confirmaciones recibidas'}
+            </p>
           </div>
           <button
             onClick={handleLogout}
@@ -258,6 +262,36 @@ export default function Admin() {
 
       {/* BODY */}
       <main className="flex-1 max-w-3xl w-full mx-auto px-4 py-8">
+        {/* TABS */}
+        <div className="flex gap-2 mb-8">
+          <button
+            onClick={() => setTab('guests')}
+            className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-colors ${
+              tab === 'guests'
+                ? 'bg-lavender-600 text-white shadow-md shadow-lavender-200'
+                : 'bg-white text-lavender-700 border border-lavender-200 hover:bg-lavender-50'
+            }`}
+          >
+            <i className="fas fa-users mr-2" />
+            Invitados
+          </button>
+          <button
+            onClick={() => setTab('rsvps')}
+            className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-colors ${
+              tab === 'rsvps'
+                ? 'bg-lavender-600 text-white shadow-md shadow-lavender-200'
+                : 'bg-white text-lavender-700 border border-lavender-200 hover:bg-lavender-50'
+            }`}
+          >
+            <i className="fas fa-check-circle mr-2" />
+            Confirmaciones
+          </button>
+        </div>
+
+        {tab === 'guests' ? (
+          <GuestsPanel />
+        ) : (
+          <>
         <div className="grid grid-cols-3 gap-4 mb-8">
           <div className="bg-white rounded-2xl p-4 text-center shadow-sm border border-lavender-100">
             <p className="font-display text-3xl text-lavender-700">{totalAdults}</p>
@@ -290,9 +324,12 @@ export default function Admin() {
             <p className="text-center text-stone-400 py-10">Todavía no hay confirmaciones.</p>
           )}
         </div>
+          </>
+        )}
       </main>
 
       {/* FOOTER */}
+      {tab === 'rsvps' && (
       <footer className="bg-white border-t border-lavender-100">
         <div className="max-w-3xl mx-auto px-4 py-6 flex flex-col sm:flex-row gap-3 justify-center">
           <button
@@ -318,6 +355,7 @@ export default function Admin() {
           </button>
         </div>
       </footer>
+      )}
     </div>
   )
 }

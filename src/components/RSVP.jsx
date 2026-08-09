@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
+import { getGuestByToken, updateGuest } from '../lib/guests'
 
 const dietaryOptions = ['Ninguna', 'Celíaco', 'Vegetariano', 'Vegano']
 
@@ -13,7 +14,22 @@ export default function RSVP() {
     dietary: 'Ninguna',
     message: '',
   })
+  const [guest, setGuest] = useState(null)
   const [status, setStatus] = useState('idle')
+
+  useEffect(() => {
+    const token = new URLSearchParams(window.location.search).get('invitado')
+    if (!token) return
+    getGuestByToken(token).then(g => {
+      if (!g) return
+      setGuest(g)
+      setForm(prev => ({
+        ...prev,
+        name: g.name,
+        adults: g.count,
+      }))
+    })
+  }, [])
 
   function buildWhatsAppMessage() {
     const lines = [
@@ -43,6 +59,12 @@ export default function RSVP() {
         song: form.message,
       }])
       if (error) throw error
+      if (guest) {
+        await updateGuest(guest.id, {
+          status: form.asistira ? 'confirmado' : 'no_asiste',
+          confirmed_count: form.asistira ? form.adults + form.minors : 0,
+        })
+      }
       setStatus('success')
     } catch {
       const url = `https://wa.me/?text=${buildWhatsAppMessage()}`
@@ -66,6 +88,11 @@ export default function RSVP() {
       <div className="max-w-lg mx-auto">
         <i className="fas fa-envelope text-gold-400 text-2xl block text-center mb-4" />
         <h3 className="font-display text-3xl text-lavender-700 italic text-center mb-2">CONFIRMÁ TU ASISTENCIA</h3>
+        {guest && (
+          <p className="text-center text-lavender-500 text-sm mb-2">
+            Confirmando la invitación de <span className="font-semibold">{guest.name}</span>
+          </p>
+        )}
         <p className="text-center text-stone-500 text-sm mb-8">Por favor, confirmar antes del 22 de agosto de 2026</p>
 
         <form onSubmit={handleSubmit} className="space-y-5">
