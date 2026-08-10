@@ -11,7 +11,7 @@ export default function Details() {
         <div className="border-t border-lavender-100 pt-6">
           <i className="fas fa-map-marker-alt text-gold-400 text-2xl mb-3 block" />
           <p className="font-display text-2xl text-lavender-700 italic">Gutiérrez Eventos</p>
-          <p className="text-stone-500 text-sm mt-1">Lincoln 1009</p>
+          <p className="text-stone-500 text-sm mt-1">Lincoln 1009 (Alt. Alsina al 3000)</p>
           <a
             href="https://maps.google.com/?q=Lincoln+1009"
             target="_blank"
