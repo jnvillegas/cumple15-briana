@@ -11,6 +11,7 @@ import Trivia from './components/Trivia'
 import RSVP from './components/RSVP'
 import Footer from './components/Footer'
 import Admin from './components/Admin'
+import Landing from './components/Landing'
 
 export default function App() {
   return (
@@ -32,6 +33,7 @@ export default function App() {
           </main>
         } />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/landing" element={<Landing />} />
       </Routes>
     </div>
   )
